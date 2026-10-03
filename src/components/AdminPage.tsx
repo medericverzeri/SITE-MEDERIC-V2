@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import { ArrowLeft, ArrowDown, ArrowUp, Download, ExternalLink, ImagePlus, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useSite, isSiteContent, normalizeContent } from '../data/siteStore';
 import { siteData } from '../data/content';
-import { downloadProject } from '../exportProject';
+import { FileDownloadButton } from './FileDownloadButton';
 
 type Section = 'profile' | 'headings' | 'about' | 'steps' | 'companies' | 'gallery' | 'faqs' | 'marquee' | 'publication';
 const sections: { id: Section; title: string }[] = [
@@ -223,9 +223,12 @@ export function AdminPage() {
     <main className="min-h-screen bg-[#fbf9f4] px-4 py-8 text-[#12241d] sm:px-8">
       <div className="mx-auto max-w-6xl">
         <a href="./" target="_blank" rel="noopener noreferrer" className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0d9488]"><ArrowLeft size={16} /> Voir le site dans un nouvel onglet</a>
-        <button type="button" className="mb-6 ml-4 inline-flex items-center gap-2 text-sm font-semibold text-[#0d9488] hover:underline" onClick={() => void downloadProject().catch(() => setMessage('Impossible de creer le ZIP. Essayez depuis un autre navigateur.'))}>
-          <Download size={16} /> Telecharger les fichiers du projet (ZIP)
-        </button>
+        <span className="mb-6 ml-4 inline-block align-middle">
+          <FileDownloadButton
+            label="Telecharger les fichiers du projet (ZIP)"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#0d9488]/40 bg-white px-4 py-2 text-sm font-semibold text-[#0d9488] hover:bg-[#0d9488]/10 disabled:opacity-60"
+          />
+        </span>
         <div className="mb-8 border-b border-[#12241d]/10 pb-6">
           <p className="text-xs font-bold uppercase tracking-widest text-[#0d9488]">Administration des contenus</p>
           <h1 className="mt-2 font-heading text-3xl font-bold sm:text-4xl">Votre espace admin</h1>

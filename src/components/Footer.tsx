@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
-import { Phone, Mail, MapPin, ExternalLink, Download } from 'lucide-react';
+import React from 'react';
+import { Phone, Mail, MapPin, ExternalLink } from 'lucide-react';
 import { useSite } from '../data/siteStore';
-import { downloadProject } from '../exportProject';
+import { FileDownloadButton } from './FileDownloadButton';
 
 interface FooterProps { galleryPage?: boolean; }
 
 export const Footer: React.FC<FooterProps> = ({ galleryPage = false }) => {
   const { profile } = useSite().content;
-  const [exporting, setExporting] = useState(false);
-
-  const getFiles = async () => {
-    setExporting(true);
-    try {
-      await downloadProject();
-    } catch {
-      window.alert('Le telechargement a echoue. Essayez a nouveau depuis un navigateur recent.');
-    } finally {
-      setExporting(false);
-    }
-  };
 
   return (
     <footer className="bg-[#12241d] text-white pt-14 pb-10 border-t border-[#12241d]/20 relative">
@@ -48,9 +36,7 @@ export const Footer: React.FC<FooterProps> = ({ galleryPage = false }) => {
               Favoriser l'insertion sociale et la transition écologique par le tri et le réemploi.
             </p>
 
-            <button type="button" disabled={exporting} onClick={getFiles} className="inline-flex items-center gap-2 rounded-lg border border-[#2dd4bf]/40 px-3 py-2 text-xs font-semibold text-[#2dd4bf] hover:bg-white/10 disabled:opacity-60">
-              <Download size={15} /> {exporting ? 'Preparation du ZIP...' : 'Telecharger les fichiers du site (ZIP)'}
-            </button>
+            <FileDownloadButton />
 
           </div>
 
